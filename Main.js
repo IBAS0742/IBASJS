@@ -155,6 +155,142 @@ var IBAS = (function () {
             return obj;
         }
         */
+
+        //merge Array
+        //isDistine : when it is true , it mean merge array with different element
+        //a = [1,2,3];b = [2,3,4]
+        //a.merge(b) => a = [1,2,3,2,3,4]
+        //a.merge(b,true) => a = [1,2,3,4]
+        _target.Array.prototype.merge = function (obj,isDistine) {
+            var _this = this;
+            obj.toArray().forEach(function (i) {
+                if (isDistine) {
+                    if (_this.includes(i)) { } else {
+                        _this.push(i);
+                    }
+                } else {
+                    _this.push(i);
+                }
+            });
+        }
+
+        //Get All of the word of the web page .
+        //Equal
+        //document.body.getWold();  <==>  getAllWord();
+        _target.getAllWord = function (fn) {
+            _target.document.body.getWord(fn);
+        }
+
+        //add prototype to a object
+        //a = {c:3};b = {a:1,b:2}
+        //a.addPrototype(b); => a = {c:3,a:1,b:2}
+        _target.Object.prototype.addPrototype = function (obj) {
+            if (typeof obj == "object") {
+                for (var i in obj) {
+                    this[i] = obj[i];
+                }
+            }
+        }
+
+        _target.addPrototype({
+            chiLabel :
+                (
+                "a abbr acronym address applet area article aside audio " +
+                "b base basefont bdi bdo big blockquote br button " +
+                "canvas caption center cite code col colgroup command " +
+                "datalist dd del details dfn dialog dir dl dt " +
+                "em embed " +
+                "fieldset figcaption figure font footer " +
+                "h1 h2 h3 h4 h5 h6 head header hr " +
+                "i input ins " +
+                "kbd keygen " +
+                "label legend li link " +
+                "main map mark meta meter " +
+                "nav noframes object optgroup option output " +
+                "p param pre progress q " +
+                "rp rt ruby " + 
+                "s samp " +
+                "td textarea tfoot th thead time tr track tt " +
+                "u " +
+                "var " +
+                "wbr "
+                ).split(' '),
+            srcLabel :
+                ("img iframe frameset iframeset video").split(' '),
+            haveChiLabel:
+                ("iframe frameset iframeset").split(' '),
+            outLabel:
+                ("#text #comment noscript script ").split(' '),
+        });
+        //Example
+        //var result = document.body.getWord(function(i){i.style.color = "red";})
+        _target.HTMLElement.prototype.getWord = function (fn) {
+            var result = {txt : [],src : []};
+            if (this.childElementCount) {
+                this.childNodes.toArray().forEach(function (i) {
+                    if (_target.chiLabel.includes(i.nodeName.toLowerCase())) {
+                        if (fn) {
+                            fn.call(fn,i);
+                        }
+                        result.txt.push(i.innerText);
+                    } else if (_target.srcLabel.includes(i.nodeName.toLowerCase())) {
+                        if (fn) {
+                            fn.call(fn, i);
+                        }
+                        result.src.push(i.innerText);
+                        if (_target.haveChiLabel.includes(i.nodeName.toLowerCase())) {
+                            // To do ...
+                        }
+                    } else if (!_target.outLabel.includes(i.nodeName.toLowerCase())) {
+                        var cresult = i.getWord(fn);
+                        result.txt.merge(cresult.txt);
+                        result.src.merge(cresult.src);
+                    }
+                });
+            } else {
+                if (fn) {
+                    fn.call(fn, this);
+                    result.txt.push(this.innerText);
+                }
+            }
+            return result;
+        }
+
+        //Example
+        //var result = document.body.getAllKindOfElement();
+        _target.HTMLElement.prototype.getAllKindOfElement = function (isToLower) {
+            var result = [];
+            this.childNodes.toArray().forEach(function (i) {
+                if (isToLower) {
+                    result.push(i.nodeName.toLowerCase());
+                } else {
+                    if (result.includes(i.nodeName)) { } else {
+                        result.push(i.nodeName);
+                    }
+                }
+                if (i.childNodes.length) {
+                    result.merge(i.getAllKindOfElement(), true);
+                }
+            });
+            return result;
+        }
     }
 })(window);
+
+
+
+/*
+function showChildName(obj) {
+	var index = 0;
+	if (obj.childElementCount) {
+		obj.childNodes.forEach(function(i){
+			index++;
+			console.log(level + " " + index + " ** " + i.nodeName);
+			level++;
+			showChildName(i);
+			level--;
+		});
+	}
+}
+*/
 
