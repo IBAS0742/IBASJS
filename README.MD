@@ -1,1 +1,1 @@
-IBASJS will be the add-on js , everyone can use it to change the UI and make it more beautiful .
+IBASJS will be the add-on js , it will be a tools assambly .
