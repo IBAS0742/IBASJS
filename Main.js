@@ -17,8 +17,10 @@ var IBAS = (function () {
         //Example
         //var a = "123456"
         //a.toArray(); //["1", "2", "3", "4", "5", "6"]
-        _target.Object.prototype.toArray = function () {
+        if (!_target.Object.prototype.toArray) {
+            _target.Object.prototype.toArray = function () {
             return Array.prototype.slice.call(this);
+        }
         }
 
         //defaultValue when it is a value , eg a , so all the prototype will be fill with a
@@ -29,100 +31,104 @@ var IBAS = (function () {
         //src.fullPrototype();
         //src.fullPrototype({"age" : 10,"sex" : "M"});
         //src.fullPrototype({"age" : 10,"sex" : "M"},null,true);
-        _target.Object.prototype.fullPrototype = function (defaultValue,singleDefault, isCaseSensitive) {
-            var arr = this.toArray();
-            var proto = [];
-            if (!defaultValue) {
-                defaultValue = {};
-            }
-            if (!singleDefault) {
-                singleDefault = null;
-            }
-            if (!isCaseSensitive) {
-                isCaseSensitive = false;
-            }
-            if (isCaseSensitive) {
-                if (typeof defaultValue != "object") {
-                    singleDefault = defaultValue;
+        if (!_target.Object.prototype.fullPrototype){
+            _target.Object.prototype.fullPrototype = function (defaultValue,singleDefault, isCaseSensitive) {
+                var arr = this.toArray();
+                var proto = [];
+                if (!defaultValue) {
                     defaultValue = {};
-                } else {
-                    for (var i in defaultValue) {
-                        defaultValue[i.toLowerCase()] = defaultValue[i];
+                }
+                if (!singleDefault) {
+                    singleDefault = null;
+                }
+                if (!isCaseSensitive) {
+                    isCaseSensitive = false;
+                }
+                if (isCaseSensitive) {
+                    if (typeof defaultValue != "object") {
+                        singleDefault = defaultValue;
+                        defaultValue = {};
+                    } else {
+                        for (var i in defaultValue) {
+                            defaultValue[i.toLowerCase()] = defaultValue[i];
+                        }
                     }
                 }
+                arr.forEach(function (i) {
+                    if (isCaseSensitive) {
+                        for (var s in i) {
+                            if (proto.includes(s)) {
+                            } else {
+                                proto.push(s);
+                            }
+                        }
+                    } else {
+                        for (var s in i) {
+                            if (proto.includes(s.toLowerCase())) {
+                            } else {
+                                proto.push(s.toLowerCase());
+                            }
+                        }
+                    }
+                });
+                arr.forEach(function (i) {
+                    if (isCaseSensitive) {
+                        for (var j = 0;j < proto.length;j++) {
+                            if (proto[j] in i) {
+                            } else {
+                                if (proto[j] in defaultValue) {
+                                    i[proto[j]] = defaultValue[proto[j]];
+                                } else {
+                                    i[proto[j]] = singleDefault;
+                                }
+                            }
+                        }
+                    } else {
+                        var cproto = [];
+                        for (var j in i) {
+                            cproto.push(j.toLowerCase());
+                        }
+                        for (var j = 0;j < proto.length;j++) {
+                            if (cproto.includes(proto[j])) {
+                            } else {
+                                if (proto[j] in defaultValue) {
+                                    i[proto[j]] = defaultValue[proto[j]];
+                                } else {
+                                    i[proto[j]] = singleDefault;
+                                }
+                            }
+                        }
+                    }
+                });
+                this.fullResult = arr;
             }
-            arr.forEach(function (i) {
-                if (isCaseSensitive) {
-                    for (var s in i) {
-                        if (proto.includes(s)) {
-                        } else {
-                            proto.push(s);
-                        }
-                    }
-                } else {
-                    for (var s in i) {
-                        if (proto.includes(s.toLowerCase())) {
-                        } else {
-                            proto.push(s.toLowerCase());
-                        }
-                    }
-                }
-            });
-            arr.forEach(function (i) {
-                if (isCaseSensitive) {
-                    for (var j = 0;j < proto.length;j++) {
-                        if (proto[j] in i) {
-                        } else {
-                            if (proto[j] in defaultValue) {
-                                i[proto[j]] = defaultValue[proto[j]];
-                            } else {
-                                i[proto[j]] = singleDefault;
-                            }
-                        }
-                    }
-                } else {
-                    var cproto = [];
-                    for (var j in i) {
-                        cproto.push(j.toLowerCase());
-                    }
-                    for (var j = 0;j < proto.length;j++) {
-                        if (cproto.includes(proto[j])) {
-                        } else {
-                            if (proto[j] in defaultValue) {
-                                i[proto[j]] = defaultValue[proto[j]];
-                            } else {
-                                i[proto[j]] = singleDefault;
-                            }
-                        }
-                    }
-                }
-            });
-            this.fullResult = arr;
         }
 
         //Example
         //var obj = document.getElementById("oneElementId");
         //var cobj = obj.deepClone();
-        _target.HTMLElement.prototype.deepClone = function () {
-            if ("cloneNode" in this) {
-                var ele = this.cloneNode();
-            } else {
-                return this;
-            }
-            if (this.childElementCount) {
-                for (var i = 0; i < this.childElementCount; i++) {
-                    if ("deepClone" in this.childNodes[i]) {
-                        var cele = this.childNodes[i].deepClone();
-                        cele.innerHTML = this.childNodes[i].innerHTML;
-                    } else {
-                        var cele = this.childNodes[i];
-                    }
-                    ele.appendChild(cele);
+        if (!_target.HTMLElement.prototype.deepClone) {
+            _target.HTMLElement.prototype.deepClone = function () {
+                if ("cloneNode" in this) {
+                    var ele = this.cloneNode();
+                } else {
+                    return this;
                 }
-            } else {
-                ele.innerHTML = this.innerHTML;
+                if (this.childElementCount) {
+                    for (var i = 0; i < this.childElementCount; i++) {
+                        if ("deepClone" in this.childNodes[i]) {
+                            var cele = this.childNodes[i].deepClone();
+                            cele.innerHTML = this.childNodes[i].innerHTML;
+                        } else {
+                            var cele = this.childNodes[i];
+                        }
+                        ele.appendChild(cele);
+                    }
+                } else {
+                    ele.innerHTML = this.innerHTML;
+                }
+                return ele;
             }
-            return ele;
         }
 
         /*
@@ -161,33 +167,39 @@ var IBAS = (function () {
         //a = [1,2,3];b = [2,3,4]
         //a.merge(b) => a = [1,2,3,2,3,4]
         //a.merge(b,true) => a = [1,2,3,4]
-        _target.Array.prototype.merge = function (obj,isDistine) {
-            var _this = this;
-            obj.toArray().forEach(function (i) {
-                if (isDistine) {
-                    if (_this.includes(i)) { } else {
+        if (!_target.Array.prototype.merge) {
+            _target.Array.prototype.merge = function (obj,isDistine) {
+                var _this = this;
+                obj.toArray().forEach(function (i) {
+                    if (isDistine) {
+                        if (_this.includes(i)) { } else {
+                            _this.push(i);
+                        }
+                    } else {
                         _this.push(i);
                     }
-                } else {
-                    _this.push(i);
-                }
-            });
+                });
+            }
         }
 
         //Get All of the word of the web page .
         //Equal
         //document.body.getWold();  <==>  getAllWord();
-        _target.getAllWord = function (fn) {
-            _target.document.body.getWord(fn);
+        if (!_target.getAllWord) {
+            _target.getAllWord = function (fn) {
+                _target.document.body.getWord(fn);
+            }
         }
 
         //add prototype to a object
         //a = {c:3};b = {a:1,b:2}
         //a.addPrototype(b); => a = {c:3,a:1,b:2}
-        _target.Object.prototype.addPrototype = function (obj) {
-            if (typeof obj == "object") {
-                for (var i in obj) {
-                    this[i] = obj[i];
+        if (!_target.Object.prototype.addPrototype) {
+            _target.Object.prototype.addPrototype = function (obj) {
+                if (typeof obj == "object") {
+                    for (var i in obj) {
+                        this[i] = obj[i];
+                    }
                 }
             }
         }
@@ -224,55 +236,59 @@ var IBAS = (function () {
         });
         //Example
         //var result = document.body.getWord(function(i){i.style.color = "red";})
-        _target.HTMLElement.prototype.getWord = function (fn) {
-            var result = {txt : [],src : []};
-            if (this.childElementCount) {
-                this.childNodes.toArray().forEach(function (i) {
-                    if (_target.chiLabel.includes(i.nodeName.toLowerCase())) {
-                        if (fn) {
-                            fn.call(fn,i);
+        if (!_target.HTMLElement.prototype.getWord) {
+            _target.HTMLElement.prototype.getWord = function (fn) {
+                var result = {txt : [],src : []};
+                if (this.childElementCount) {
+                    this.childNodes.toArray().forEach(function (i) {
+                        if (_target.chiLabel.includes(i.nodeName.toLowerCase())) {
+                            if (fn) {
+                                fn.call(fn,i);
+                            }
+                            result.txt.push(i.innerText);
+                        } else if (_target.srcLabel.includes(i.nodeName.toLowerCase())) {
+                            if (fn) {
+                                fn.call(fn, i);
+                            }
+                            result.src.push(i.innerText);
+                            if (_target.haveChiLabel.includes(i.nodeName.toLowerCase())) {
+                                // To do ...
+                            }
+                        } else if (!_target.outLabel.includes(i.nodeName.toLowerCase())) {
+                            var cresult = i.getWord(fn);
+                            result.txt.merge(cresult.txt);
+                            result.src.merge(cresult.src);
                         }
-                        result.txt.push(i.innerText);
-                    } else if (_target.srcLabel.includes(i.nodeName.toLowerCase())) {
-                        if (fn) {
-                            fn.call(fn, i);
-                        }
-                        result.src.push(i.innerText);
-                        if (_target.haveChiLabel.includes(i.nodeName.toLowerCase())) {
-                            // To do ...
-                        }
-                    } else if (!_target.outLabel.includes(i.nodeName.toLowerCase())) {
-                        var cresult = i.getWord(fn);
-                        result.txt.merge(cresult.txt);
-                        result.src.merge(cresult.src);
+                    });
+                } else {
+                    if (fn) {
+                        fn.call(fn, this);
+                        result.txt.push(this.innerText);
                     }
-                });
-            } else {
-                if (fn) {
-                    fn.call(fn, this);
-                    result.txt.push(this.innerText);
                 }
+                return result;
             }
-            return result;
         }
 
         //Example
         //var result = document.body.getAllKindOfElement();
-        _target.HTMLElement.prototype.getAllKindOfElement = function (isToLower) {
-            var result = [];
-            this.childNodes.toArray().forEach(function (i) {
-                if (isToLower) {
-                    result.push(i.nodeName.toLowerCase());
-                } else {
-                    if (result.includes(i.nodeName)) { } else {
-                        result.push(i.nodeName);
+        if (!_target.HTMLElement.prototype.getAllKindOfElement) {
+            _target.HTMLElement.prototype.getAllKindOfElement = function (isToLower) {
+                var result = [];
+                this.childNodes.toArray().forEach(function (i) {
+                    if (isToLower) {
+                        result.push(i.nodeName.toLowerCase());
+                    } else {
+                        if (result.includes(i.nodeName)) { } else {
+                            result.push(i.nodeName);
+                        }
                     }
-                }
-                if (i.childNodes.length) {
-                    result.merge(i.getAllKindOfElement(), true);
-                }
-            });
-            return result;
+                    if (i.childNodes.length) {
+                        result.merge(i.getAllKindOfElement(), true);
+                    }
+                });
+                return result;
+            }
         }
     }
 })(window);
