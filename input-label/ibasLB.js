@@ -28,6 +28,8 @@ var ibasLabel = (function(tar){
 				var setLabelLength = function(len_) {
 					if (len_ < 1) {
 						throw new Error(defalutLanguage.lessThanMinLen);
+					} else {
+						labelLength = len_;
 					}
 				};
 				var setLanguage = function(obj) {
