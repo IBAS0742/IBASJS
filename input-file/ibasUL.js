@@ -140,13 +140,13 @@ var ibasFile = (function(tar){
 					//新建元素
 					topDiv = domUtil.newEle('div');
 					topDiv.classList.add('ibas-file-div');
-					topDiv.onclick = function() {
+					topDiv.onclick = function(event) {
 						targetEle.click();
 						event.stopPropagation();
 					};
 					chiDiv.push(domUtil.newEle('div'));	//	第一个为未选择文件时的提示
 					chiDiv.push(domUtil.newEle('div'));	//	第二个为选中文件后的文件列表
-					chiDiv[1].onclick = function() {
+					chiDiv[1].onclick = function(event) {
 						//阻止事件冒泡
 						event.stopPropagation();
 					};
