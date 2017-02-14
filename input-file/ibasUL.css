@@ -45,3 +45,8 @@
 .ibas-file-span:hover {
 	background : rgb(226, 226, 226);
 }
+
+.ibas-file-count{
+	font-size : 50px;
+	text-align : center;
+}

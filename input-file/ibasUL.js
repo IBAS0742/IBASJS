@@ -40,10 +40,15 @@ var ibasFile = (function(tar){
 			return (function(){
 				var targetEle = target,
 					topDiv = tarDiv,
+					totalDiv,
 					chiDiv = [],
+					total = 0,
 					defaultLanguage = {
 						clickToSelectFile : 'Click To Select File',
-						reSelect : 're-select'
+						reSelect : 're-select',
+						toMin : 'to be minimized',
+						toMax : 'to be maximized',
+						files : 'files'
 					},
 					typeRegx = /\.[a-zA-Z0-9]+/;
 				//仅仅允许三种形式
@@ -68,6 +73,67 @@ var ibasFile = (function(tar){
 				var setLanguage = function(obj) {
 					for (var i in obj) {
 						defaultLanguage[i] = obj[i];
+					}
+				}
+				function min_list() {
+					var ele = chiDiv[1].getElementsByClassName('ibas-file-item');
+					for (var i = 0;i < ele.length;i++) {
+						ele[i].style.display = 'none';
+					}
+					totalDiv.style.display = 'block';
+					this.classList.remove('glyphicon-chevron-down');
+					this.classList.add('glyphicon-chevron-down');
+					this.innerText = defaultLanguage.toMax;
+					this.onclick = max_list;
+				}
+				function max_list() {
+					var ele = chiDiv[1].getElementsByClassName('ibas-file-item');
+					for (var i = 0;i < ele.length;i++) {
+						ele[i].style.display = 'block';
+					}
+					totalDiv.style.display = 'none';
+					this.classList.add('glyphicon-chevron-down');
+					this.classList.remove('glyphicon-chevron-down');
+					this.innerText = defaultLanguage.toMin;
+					this.onclick = min_list;
+				}
+				var selectNewFile = function() {
+					var files = this.files;
+					//删除1中的所有元素
+					var ele = chiDiv[1].children,
+						len = ele.length;
+					for (var i = 0;i < len;i++) {
+						chiDiv[1].removeChild(ele[0]);
+					}
+					if (files.length > 0) {
+						total = files.length;
+						chiDiv[0].style.display = 'none';
+						chiDiv[1].style.display = 'block';
+						//在1中新建元素
+						var re_span = domUtil.newEleWithConeten('span',defaultLanguage.reSelect);
+						re_span.classList.add('glyphicon','glyphicon-share-alt','ibas-file-span');
+						var min_span = domUtil.newEleWithConeten('span',defaultLanguage.toMin);
+						min_span.classList.add('glyphicon','glyphicon-chevron-up','ibas-file-span');
+						min_span.onclick = min_list;
+						min_span.style.float = 'right';
+						var t = this;
+						re_span.onclick = function () {
+							t.click();
+						};
+						chiDiv[1].appendChild(re_span);
+						chiDiv[1].appendChild(min_span);
+						for (var i = 0;i < files.length;i++) {
+							var tspan = domUtil.newEleWithConeten('span',targetEle.files[i].name);
+							tspan.classList.add('glyphicon','glyphicon-file','ibas-file-item','ibas-file-span');
+							chiDiv[1].appendChild(tspan);
+						}
+						totalDiv = domUtil.newEleWithConeten('div',total + '' + defaultLanguage.files);
+						chiDiv[1].appendChild(totalDiv);
+						totalDiv.style.display = 'none';
+						totalDiv.classList.add('ibas-file-count','glyphicon','glyphicon-file');
+					} else {
+						chiDiv[1].style.display = 'none';
+						chiDiv[0].style.display = 'block';
 					}
 				}
 				function init() {
@@ -101,35 +167,7 @@ var ibasFile = (function(tar){
 					topDiv.appendChild(chiDiv[1]);
 					chiDiv[0].appendChild(chiDivIcon);
 					chiDiv[0].appendChild(chiDivText);
-					targetEle.onchange = function() {
-						var files = this.files;
-						//删除1中的所有元素
-						var ele = chiDiv[1].children,
-							len = ele.length;
-						for (var i = 0;i < len;i++) {
-							chiDiv[1].removeChild(ele[0]);
-						}
-						if (files.length > 0) {
-							chiDiv[0].style.display = 'none';
-							chiDiv[1].style.display = 'block';
-							//在1中新建元素
-							var span = domUtil.newEleWithConeten('span',defaultLanguage.reSelect);
-							span.classList.add('glyphicon','glyphicon-share-alt','ibas-file-span');
-							var t = this;
-							span.onclick = function () {
-								t.click();
-							};
-							chiDiv[1].appendChild(span);
-							for (var i = 0;i < files.length;i++) {
-								var tspan = domUtil.newEleWithConeten('span',targetEle.files[i].name);
-								tspan.classList.add('glyphicon','glyphicon-file','ibas-file-item','ibas-file-span');
-								chiDiv[1].appendChild(tspan);
-							}
-						} else {
-							chiDiv[1].style.display = 'none';
-							chiDiv[0].style.display = 'block';
-						}
-					}
+					targetEle.onchange = selectNewFile;
 				};
 				
 				return {
