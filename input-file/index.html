@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+	<head lang="en">
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			* {
+			}
+		</style>
+		<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css">
+		<link type="text/css" rel="stylesheet" href="css/bootstrap-theme.min.css">
+		<link type="text/css" rel="stylesheet" href="ibasUL.css">
+		<script src = "domUtil.js"></script>
+		<script src = "ibasUL.js"></script>
+	</head>
+	<body>
+		<form>
+			<input type = 'file' id = 'a' multiple class = 'ibas-file-input' name = ''/>
+		</form>
+		<script>
+			var file = document.getElementById('a');
+			var ibasFile0 = ibasFile('.ibas-file-input');
+			ibasFile0.setFileTypeLimit(['txt']);
+			ibasFile0.setLanguage({
+				clickToSelectFile : '点击选择文件',
+				reSelect : '重新选择'
+			});
+			ibasFile0.init();
+		</script>
+	</body>
+</html>
