@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			* {
+			}
+		</style>
+		<link type="text/css" rel="stylesheet" href="ibasLB.css">
+		<script src = "domUtil.js"></script>
+		<script src = "HtmlExtern.js"></script>
+		<script src = "HtmlExtern.js"></script>
+		<script src="ArrExt.js"></script>
+		<!--
+			<script src = "StringExt.js"></script>
+		-->
+		<script>
+			ibasHtmlExt.afterInsert();
+			ibasHtmlExt.beforeInsert();
+			ibasHtmlExt.insertMid();
+			ArrExt.pushExt();
+			ArrExt.joinExt();
+			//StringExt.splitExt();
+		</script>
+		<script src = "ibasLB.js"></script>
+	</head>
+	<body>
+		<input type = 'text'/>
+		<div class = 'ibas-label-div'>
+			<div class = 'ibas-label-cdiv'>
+				<span class = 'ibas-label-label'>
+					label1
+				</span>
+				<span class = 'ibas-label-btn-close'>x</span>
+			</div>
+			<span class = 'ibas-label-label'>label2</span>
+			<span class = 'ibas-label-label'>label3</span>
+			<span class = 'ibas-label-label'>label4</span>
+			<input type = 'text' placeholder = 'Tag ...' class = 'ibas-label-input'/>
+		</div>
+		<input type = 'text' placeholder = 'Tag ...' class = 'ibas-label-input' id = 'label'>
+		<script>
+			var ibas = ibasLabel("#label");
+			ibas.init();
+		</script>
+	</body>
+</html>

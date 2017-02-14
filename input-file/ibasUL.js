@@ -1,28 +1,6 @@
 var ibasFile = (function(tar){
-	var target = getTar(tar),
+	var target = domUtil.getTar(tar),
 		tarDiv;
-	function getTar(tar){
-		if (tar instanceof Element) {
-			return tar;
-		} else if (tar instanceof Array) {
-			if (tar.length > 0) {
-				return getTar(tar[0]);
-			}
-		} else if ((typeof '').toLowerCase() === 'string') {
-			if (tar[0] == '.') {
-				//class
-				return document.getElementsByClassName(tar.substr(1))[0];
-			} else if (tar[0] == '#') {
-				//id
-				return document.getElementById(tar.substr(1));
-			} else {
-				//ele tag name
-				return document.getElementsByTagName(tar)[0];
-			}
-		}
-		throw new Error('未能找到元素');
-		return null;
-	};
 	function check() {
 		//判断是否为input元素
 		if (a.tagName.toLowerCase() === 'input') {
@@ -158,11 +136,12 @@ var ibasFile = (function(tar){
 					var chiDivText = domUtil.newEleWithConeten('div',defaultLanguage.clickToSelectFile);
 					chiDivText.classList.add('text-center');
 					//将元素添加到dom中
-					if (targetEle.nextSibling) {
+					targetEle.insertAfter(topDiv);
+					/*if (targetEle.nextSibling) {
 						targetEle.parentElement.insertBefore(topDiv,targetEle.nextSibling);
 					} else {
 						targetEle.parentElement.appendChild(topDiv);
-					}
+					}*/
 					topDiv.appendChild(chiDiv[0]);
 					topDiv.appendChild(chiDiv[1]);
 					chiDiv[0].appendChild(chiDivIcon);

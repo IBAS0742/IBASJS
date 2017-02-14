@@ -58,7 +58,7 @@ var domUtil = (function(){
 	}
     return {
         newEle : newEle,
-        newEleWithConeten : newEleWithConeten,
+        newEleWithConten : newEleWithConten,
         getTar : getTar
     };
 })();

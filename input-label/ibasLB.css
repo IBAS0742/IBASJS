@@ -1,0 +1,47 @@
+.ibas-label-input {
+	outline : none;
+	border : none;
+	width : 100%;
+}
+
+.ibas-label-div {
+	margin : 2px;
+	padding : 4px;
+	border : 1px solid;
+	width : 200px;
+	height : auto;
+	border-radius : 6px;
+	display: inline-block;
+}
+
+.ibas-label-label {
+	background: aquamarine;
+    border: aliceblue 1px;
+    padding: 2px;
+    margin: 2px 0px 2px 2px;
+    float: left;
+    box-sizing: border-box;
+    height: 22px;
+}
+
+.ibas-label-btn-close {
+	border: none;
+    padding: 2px;
+    margin: 2px 2px 2px 0px;
+    background: rgb(141, 239, 208);
+    height: 22px;
+    width: 10px;
+    box-sizing: border-box;
+    display: inline-table;
+	text-align: center;
+	cursor : pointer;
+}
+
+.ibas-label-btn-close:hover {
+    background: rgb(121, 228, 234);
+}
+
+.ibas-label-cdiv {
+	float : left;
+}
+

@@ -4,16 +4,38 @@
 		<meta charset="UTF-8">
 		<title></title>
 		<style>
-			* {
+			p {
+				text-indent: 2em;
 			}
 		</style>
 		<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css">
 		<link type="text/css" rel="stylesheet" href="css/bootstrap-theme.min.css">
 		<link type="text/css" rel="stylesheet" href="ibasUL.css">
 		<script src = "domUtil.js"></script>
+		<script src = "HtmlExtern.js"></script>
+		<script>
+			ibasHtmlExt.afterInsert();
+		</script>
 		<script src = "ibasUL.js"></script>
 	</head>
 	<body>
+		<div style = 'margin : 10px;'>
+			<p>
+				这里除了使用了bootstrap中的几个Glyphicons 字体图标和text-center样式外，没有其他文件和库的引用，觉得引用麻烦就将ibasUL.js中的glyphicons样式删除即可。
+			</p>
+			<p>
+				其中
+				text-center {
+					text-align : center;
+				}
+			</p>
+			<p>
+				另：项目位置 https://github.com/IBAS0742/IBASJS/tree/master/input-file
+			</p>
+			<p>
+				另：时间紧凑没有实现动画。
+			</p>
+		</div>
 		<form>
 			<input type = 'file' id = 'a' multiple class = 'ibas-file-input' name = ''/>
 		</form>
