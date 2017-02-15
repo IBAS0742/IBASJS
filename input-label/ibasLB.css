@@ -25,14 +25,15 @@
 }
 
 .ibas-label-btn-close {
-	border: none;
+	border: rgb(141, 239, 208) 1px;
     padding: 2px;
+    float: left;
     margin: 2px 2px 2px 0px;
     background: rgb(141, 239, 208);
     height: 22px;
-    width: 10px;
+    width: 12px;
     box-sizing: border-box;
-    display: inline-table;
+    /*display: inline-table;*/
 	text-align: center;
 	cursor : pointer;
 }
