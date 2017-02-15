@@ -16,10 +16,47 @@ var ibasHtmlExt = (function() {
                 } else {
                     throw new Error(ele + " have not parrent element.");
                 }
-            }
+            };
         }
-    }
+    };
+    function beforeInsert() {
+        if (!Element.prototype.beforeInsert) {
+            Element.prototype.beforeInsert = function(tar) {
+                var ele = this;
+                if (tar.parentElement) {
+                    throw new Error(tar + 'have not parent element.');
+                } else {
+                    tar.parentElement.insertBefore(tar,ele);
+                }
+            };
+        }
+    };
+    //将tar放在ele(this)的本身和parent中间
+    //初始
+    //<ele-parent>
+    //  <ele></ele>
+    //</ele-parent>
+    //结果
+    //<ele-parent>
+    //  <tar>
+    //      <ele></ele>
+    //  </tar>
+    //</ele-parent>
+    function insertMid() {
+        if (!Element.prototype.insertMid) {
+            Element.prototype.insertMid = function(tar) {
+                var ele = this;
+                if (ele.parentElement) {
+                    ele.beforeInsert(tar);
+                    ele.parentElement.removeChild(ele);
+                    tar.appendChild(ele);
+                }
+            };
+        }
+    };
     return {
-        afterInsert : afterInsert
+        afterInsert : afterInsert,
+        beforeInsert : beforeInsert,
+        insertMid : insertMid
     }
 })();

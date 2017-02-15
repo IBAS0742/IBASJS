@@ -41,24 +41,24 @@ var domUtil = (function(){
         throw new Error('未能找到元素');
         return null;
     };
-	//将tar元素放置到ele (this)元素后面
-	if (Element.prototype.insertAfter) {
-		Element.prototype.insertAfter = function(tar) {
-			var ele = this;
-			if (ele.parentElement) {
-				if (ele.nextSibling) {
-					ele.parentElement.insertBefore(ele.nextSibling);
-				} else {
-					ele.parentElement.appendChild(tar);
-				}
-			} else {
-				throw new Error(ele + " have not parrent element.");
-			}
-		}
-	}
+    //将tar元素放置到ele (this)元素后面
+    if (Element.prototype.insertAfter) {
+        Element.prototype.insertAfter = function(tar) {
+            var ele = this;
+            if (ele.parentElement) {
+                if (ele.nextSibling) {
+                    ele.parentElement.insertBefore(ele.nextSibling);
+                } else {
+                    ele.parentElement.appendChild(tar);
+                }
+            } else {
+                throw new Error(ele + " have not parrent element.");
+            }
+        }
+    }
     return {
         newEle : newEle,
-        newEleWithConeten : newEleWithConeten,
+        newEleWithConten : newEleWithConten,
         getTar : getTar
     };
 })();

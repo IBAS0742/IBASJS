@@ -19,6 +19,7 @@ var ibasLabel = (function(tar){
 					vinput,
 					topDiv,
 					arr = [],
+					divarr = [],
 					cot = 0,
 					labelLength = 6,
 					defalutLanguage = {
@@ -66,7 +67,15 @@ var ibasLabel = (function(tar){
 						);
 						return;
 					}
-					if (!arr.pushExt(text_,1)) {
+					var ret = arr.pushExt(text_,3);
+					if (ret != -1) {
+						//ret为重复的标记
+						divarr[ret].classList.add('ibas-IL-warn');
+						setTimeout(function(){
+							divarr[ret]
+								.classList
+								.remove('ibas-IL-warn');
+						},1000);
 						return;
 					}
 					var labelDiv = domUtil.newEle('div');
@@ -81,6 +90,7 @@ var ibasLabel = (function(tar){
 					targetEle.beforeInsert(labelDiv);
 					labelDiv.appendChild(labelSpan);
 					labelDiv.appendChild(closeSpan);
+					divarr.push(labelDiv);
 					closeSpan.onclick = closeSpanClick;
 					vinput.value = arr.joinExt(',',2);
 				};
@@ -89,6 +99,7 @@ var ibasLabel = (function(tar){
 					arr[this.parentElement.index] = '';
 					topDiv.removeChild(this.parentElement);
 					vinput.value = arr.joinExt(',',2);
+					divarr[this.parentElement.index] = '';
 				};
 				var showValue = function() {
 					console.log(vinput.value);

@@ -2,9 +2,9 @@ var ibasFile = (function(tar){
 	var target = domUtil.getTar(tar),
 		tarDiv;
 	function check() {
-		//ÅĞ¶ÏÊÇ·ñÎªinputÔªËØ
+		//åˆ¤æ–­æ˜¯å¦ä¸ºinputå…ƒç´ 
 		if (a.tagName.toLowerCase() === 'input') {
-			//ÅĞ¶ÏÊÇ·ñÎªfileÀàĞÍ
+			//åˆ¤æ–­æ˜¯å¦ä¸ºfileç±»å‹
 			if (a.getAttribute('type').toLowerCase() === 'file') {
 				return true;
 			}
@@ -29,7 +29,7 @@ var ibasFile = (function(tar){
 						files : 'files'
 					},
 					typeRegx = /\.[a-zA-Z0-9]+/;
-				//½ö½öÔÊĞíÈıÖÖĞÎÊ½
+				//ä»…ä»…å…è®¸ä¸‰ç§å½¢å¼
 				//types = ['*.txt','*.jpg']
 				//types = ['txt','jpg']
 				//types = '*.txt,*.jpg';
@@ -77,7 +77,7 @@ var ibasFile = (function(tar){
 				}
 				var selectNewFile = function() {
 					var files = this.files;
-					//É¾³ı1ÖĞµÄËùÓĞÔªËØ
+					//åˆ é™¤1ä¸­çš„æ‰€æœ‰å…ƒç´ 
 					var ele = chiDiv[1].children,
 						len = ele.length;
 					for (var i = 0;i < len;i++) {
@@ -87,10 +87,10 @@ var ibasFile = (function(tar){
 						total = files.length;
 						chiDiv[0].style.display = 'none';
 						chiDiv[1].style.display = 'block';
-						//ÔÚ1ÖĞĞÂ½¨ÔªËØ
-						var re_span = domUtil.newEleWithConeten('span',defaultLanguage.reSelect);
+						//åœ¨1ä¸­æ–°å»ºå…ƒç´ 
+						var re_span = domUtil.newEleWithConten('span',defaultLanguage.reSelect);
 						re_span.classList.add('glyphicon','glyphicon-share-alt','ibas-file-span');
-						var min_span = domUtil.newEleWithConeten('span',defaultLanguage.toMin);
+						var min_span = domUtil.newEleWithConten('span',defaultLanguage.toMin);
 						min_span.classList.add('glyphicon','glyphicon-chevron-up','ibas-file-span');
 						min_span.onclick = min_list;
 						min_span.style.float = 'right';
@@ -101,11 +101,11 @@ var ibasFile = (function(tar){
 						chiDiv[1].appendChild(re_span);
 						chiDiv[1].appendChild(min_span);
 						for (var i = 0;i < files.length;i++) {
-							var tspan = domUtil.newEleWithConeten('span',targetEle.files[i].name);
+							var tspan = domUtil.newEleWithConten('span',targetEle.files[i].name);
 							tspan.classList.add('glyphicon','glyphicon-file','ibas-file-item','ibas-file-span');
 							chiDiv[1].appendChild(tspan);
 						}
-						totalDiv = domUtil.newEleWithConeten('div',total + '' + defaultLanguage.files);
+						totalDiv = domUtil.newEleWithConten('div',total + '' + defaultLanguage.files);
 						chiDiv[1].appendChild(totalDiv);
 						totalDiv.style.display = 'none';
 						totalDiv.classList.add('ibas-file-count','glyphicon','glyphicon-file');
@@ -115,40 +115,39 @@ var ibasFile = (function(tar){
 					}
 				}
 				function init() {
-					//ĞÂ½¨ÔªËØ
+					//æ–°å»ºå…ƒç´ 
 					topDiv = domUtil.newEle('div');
 					topDiv.classList.add('ibas-file-div');
 					topDiv.onclick = function(event) {
 						targetEle.click();
 						event.stopPropagation();
 					};
-					chiDiv.push(domUtil.newEle('div'));	//	µÚÒ»¸öÎªÎ´Ñ¡ÔñÎÄ¼şÊ±µÄÌáÊ¾
-					chiDiv.push(domUtil.newEle('div'));	//	µÚ¶ş¸öÎªÑ¡ÖĞÎÄ¼şºóµÄÎÄ¼şÁĞ±í
+					chiDiv.push(domUtil.newEle('div'));	//	ç¬¬ä¸€ä¸ªä¸ºæœªé€‰æ‹©æ–‡ä»¶æ—¶çš„æç¤º
+					chiDiv.push(domUtil.newEle('div'));	//	ç¬¬äºŒä¸ªä¸ºé€‰ä¸­æ–‡ä»¶åçš„æ–‡ä»¶åˆ—è¡¨
 					chiDiv[1].onclick = function(event) {
-						//×èÖ¹ÊÂ¼şÃ°Åİ
+						//é˜»æ­¢äº‹ä»¶å†’æ³¡
 						event.stopPropagation();
 					};
-					//Òş²ØµÚ¶ş¸öÔªËØ
+					//éšè—ç¬¬äºŒä¸ªå…ƒç´ 
 					chiDiv[1].style.display = 'none';
-					//ÎªµÚÒ»¸öÔªËØÌí¼Ó×ÓÔªËØ
+					//ä¸ºç¬¬ä¸€ä¸ªå…ƒç´ æ·»åŠ å­å…ƒç´ 
 					var chiDivIcon = domUtil.newEle('div');
 					chiDivIcon.classList.add('glyphicon','glyphicon-folder-open','ibas-file-tip','text-center');
-					var chiDivText = domUtil.newEleWithConeten('div',defaultLanguage.clickToSelectFile);
+					var chiDivText = domUtil.newEleWithConten('div',defaultLanguage.clickToSelectFile);
 					chiDivText.classList.add('text-center');
-					//½«ÔªËØÌí¼Óµ½domÖĞ
-					targetEle.insertAfter(topDiv);
-					/*if (targetEle.nextSibling) {
+					//å°†å…ƒç´ æ·»åŠ åˆ°domä¸­
+					if (targetEle.nextSibling) {
 						targetEle.parentElement.insertBefore(topDiv,targetEle.nextSibling);
 					} else {
 						targetEle.parentElement.appendChild(topDiv);
-					}*/
+					}
 					topDiv.appendChild(chiDiv[0]);
 					topDiv.appendChild(chiDiv[1]);
 					chiDiv[0].appendChild(chiDivIcon);
 					chiDiv[0].appendChild(chiDivText);
 					targetEle.onchange = selectNewFile;
 				};
-				
+
 				return {
 					targetEle : targetEle,
 					topDiv : topDiv,

@@ -15,8 +15,8 @@
 }
 
 .ibas-label-label {
-	background: aquamarine;
-    border: aliceblue 1px;
+	background: #e4f1ec;
+    border: #e4f1ec 1px;
     padding: 2px;
     margin: 2px 0px 2px 2px;
     float: left;
@@ -25,11 +25,11 @@
 }
 
 .ibas-label-btn-close {
-	border: rgb(141, 239, 208) 1px;
-    padding: 2px;
+	border: rgb(222, 222, 222) 1px;
+    padding: 1px 2px 3px 2px;
     float: left;
     margin: 2px 2px 2px 0px;
-    background: rgb(141, 239, 208);
+    background: rgb(222, 222, 222);
     height: 22px;
     width: 12px;
     box-sizing: border-box;
@@ -39,10 +39,78 @@
 }
 
 .ibas-label-btn-close:hover {
-    background: rgb(121, 228, 234);
+    background: rgb(187, 187, 187);
 }
 
 .ibas-label-cdiv {
 	float : left;
+}
+
+.ibas-IL-warn {
+	animation : ibas-IL-warn-ani 1s;
+	-moz-animation : ibas-IL-warn-ani 1s;
+	-webkit-animation : ibas-IL-warn-ani 1s;
+	-o-animation : ibas-IL-warn-ani 1s;
+	-ms-animation : ibas-IL-warn-ani 1s;
+}
+
+@keyframes ibas-IL-warn-ani {
+	0% {
+		background: rgb(217, 232, 245);
+	}
+	50% {
+		background: rgb(74, 91, 128);
+	} 
+	100% {
+		background: rgb(217, 232, 245);
+	} 
+}
+
+@-moz-keyframes ibas-IL-warn-ani {
+	0% {
+		background: rgb(217, 232, 245);
+	}
+	50% {
+		background: rgb(74, 91, 128);
+	}
+	100% {
+		background: rgb(217, 232, 245);
+	}
+}
+
+@-webkit-keyframes ibas-IL-warn-ani {
+	0% {
+		background: rgb(217, 232, 245);
+	}
+	50% {
+		background: rgb(74, 91, 128);
+	}
+	100% {
+		background: rgb(217, 232, 245);
+	}
+}
+
+@-o-keyframes ibas-IL-warn-ani {
+	0% {
+		background: rgb(217, 232, 245);
+	}
+	50% {
+		background: rgb(74, 91, 128);
+	}
+	100% {
+		background: rgb(217, 232, 245);
+	}
+}
+
+@-ms-keyframes ibas-IL-warn-ani {
+	0% {
+		background: rgb(217, 232, 245);
+	}
+	50% {
+		background: rgb(74, 91, 128);
+	}
+	100% {
+		background: rgb(217, 232, 245);
+	}
 }
 

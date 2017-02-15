@@ -5,7 +5,8 @@
 var ArrExt = (function (){
     var pushOption = {
         Distinct : 1,
-        DropUnUse : 2
+        DropUnUse : 2,
+        ShowIndex : 3
     };
     var copyTime = function() {
         if (!Array.prototype.copyTimes) {
@@ -41,17 +42,22 @@ var ArrExt = (function (){
         if (!Array.prototype.pushExt) {
             Array.prototype.pushExt = function(item,option) {
                 var ret = true,
-                    arr = this;
-                if (option == pushOption.Distinct) {
-                    arr.forEach(function(i){
+                    arr = this,
+                    index = -1;
+                if (option == pushOption.Distinct || option == pushOption.ShowIndex) {
+                    arr.forEach(function(i,j){
                         if (i == item) {
                             ret = false;
+                            index = j;
                             return;
                         }
                     });
                 }
                 if (ret) {
                     this.push(item);
+                }
+                if (pushOption.ShowIndex == option) {
+                    return index;
                 }
                 return ret;
             }
