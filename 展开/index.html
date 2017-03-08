@@ -1,0 +1,192 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="dist/css/bootstrap.min.css">
+        <script src="jquery-1.11.3.js"></script>
+        <script src="dist/js/bootstrap.min.js"></script>
+        <style>
+            .main{
+                top: 10px;
+                position: relative;
+            }
+            .ibas-TCopen {
+                float : right;
+                cursor: pointer;
+            }
+            .ibas-TCopen:hover {
+                color: #969595;
+            }
+            .ibas-tranlate-content {
+                border : none;
+                display: block;
+                margin : 3px 10px;
+            }
+            .ibas-TChip {
+                min-width: 200px;
+            }
+            .ibas-mark-li {
+                width: 49%;
+                padding: 2px;
+                margin: 0px;
+                list-style: none;
+                background: whitesmoke;
+                text-align: center;
+                height: 26px;
+                font-size: 22px;
+                cursor: pointer;
+            }
+            .ibas-mark-ul {
+                margin: 0px;
+                padding: 2px;
+                height: 35px;
+            }
+            .loading
+            {
+                animation: myfirst .5s linear infinite;
+            }
+            @keyframes myfirst
+            {
+                from {
+                    transform: rotate(0deg);
+                }
+                to {
+                    transform: rotate(180deg);
+                }
+            }
+
+            .ibas-textarea {
+                border: none;
+                outline: none;
+                width: 100%;
+                height: 100px;
+                padding: 4px;
+                line-height: 16px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="main">
+            <div class="panel panel-info ibas-TChip">
+                <div class="panel-heading">
+                    <i class="glyphicon glyphicon-chevron-left"></i>
+                </div>
+                <div class="panel-collapse collapse" id="mainS">
+                    <textarea class="ibas-textarea"></textarea>
+                </div>
+            </div>
+
+            
+            <div class="panel panel-default ibas-TChip">
+                <!--头部部分-->
+                <div class="panel-heading">
+                    <i class="glyphicon glyphicon-fire">
+                        123
+                    </i>
+                    <i class = 
+                    "ibas-TCopen 
+                    glyphicon 
+                    glyphicon-chevron-left"
+                    cur = "left"
+                    tog =  "down"
+                    onclick = onpen(this)></i>
+                </div>
+                <!--内容部分-->
+                <div id = "ct_tskidid" class="panel-collapse collapse">
+                    <div>
+                        <div>
+                        </div>
+                        <ul class="ibas-mark-ul">
+                            <li class="ibas-mark-li glyphicon glyphicon-thumbs-down">
+                            </li>
+                            <li class="ibas-mark-li glyphicon glyphicon-hand-right">
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style = "padding:10px;">
+            <span class="loading glyphicon glyphicon-refresh"></span>
+        </div>
+        <script>
+            var onpen = function(e) {
+                if (!e.cur) {
+                    e.cur = e.getAttribute("cur");
+                    e.tog = e.getAttribute("tog");
+                }
+                $(".panel-collapse").collapse("toggle");
+                $(e).removeClass("glyphicon-chevron-" + e.cur);
+                $(e).addClass("glyphicon-chevron-" + e.tog);
+                var tmp = e.cur;
+                e.cur = e.tog;
+                e.tog = tmp;
+            }
+            var a = "rinf;ijg;aewokfa;pwoejg'aw";
+            window.onload = function() {
+                var str = a;
+                for (var i = 1;i < 10;i++) {
+                    str += "\n" + a;
+                }
+                while (str.indexOf("\n") + 1) {
+                    str = str.replace("\n","<br/>")
+                }
+                var t = $(".panel-collapse div div");
+                t.html(str);
+                t.addClass("ibas-tranlate-content");
+                $("#mainS").collapse();
+                reSetSave();
+            }
+            function reSetSave() {
+                var ibt = $(".ibas-textarea");
+                ibt[0].her = false;
+                ibt[0].lines = 1;
+                ibt[0].lastCh = '';
+                ibt[0].lineHeight = 16;
+                ibt[0].baseLine = 5;
+                ibt[0].baseHeight = 
+                ibt[0].style.height = (16 * 5) + "px";
+                ibt.keydown(function(e) {
+                    if (e.ctrlKey == true && e.keyCode == 83) {
+                        //此时按下了ctrl+s键
+                        console.log(this.value);
+                        return false;
+                    } else {
+                    }
+                    ///////////智能调节高度//////////////
+                    if (e.keyCode == 8) {
+                        if (this.lastCh == 10 || this.lastCh == 13) {
+                            this.line--;
+                        }
+                        this.lastCh = this.value[this.value.length - 2];
+                        //console.log(this.lastCh.charCodeAt(0));
+                        //退格则检查是否比最小行还小
+                        if (this.lines < this.baseLine) {
+                            this.her = false;
+                            this.style.height = (this.baseLine * this.lineHeight) + "px";
+                        } else {
+                            this.style.height = (this.lines * this.lineHeight) + "px";
+                        }
+                    } else {
+                        this.lastCh = e.keyCode;
+                        if (e.keyCode == 13 || e.keyCode == 10) {
+                            this.lines++;
+                            if (this.her) {
+                                //
+                                this.style.height = (this.lines * this.lineHeight) + "px";
+                            } else {
+                                if (this.lines >= this.baseLine) {
+                                    this.style.height = (this.lines * this.lineHeight) + "px";
+                                    this.her = true;
+                                } else {
+                                    this.style.height = (this.baseLine * this.lineHeight) + "px";
+                                }
+                            }
+                        } else {
+                            //
+                        }
+                    }
+                    console.log(this.lines + "\tec : " + e.keyCode + "\tla ： " + this.lastCh);
+                });
+            }
+        </script>
+    </body>
+</html>
